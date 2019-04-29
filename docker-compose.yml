@@ -1,0 +1,14 @@
+version: "3"
+services:
+  invoice_backend:
+    image: tpshop:1.0
+    ports:
+      # for test
+      - "9902:80"
+    networks:
+      - net
+    restart: always
+    volumes: 
+      - ./dist:/var/www/html
+networks:
+  net:
