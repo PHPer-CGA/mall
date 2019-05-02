@@ -1,15 +1,26 @@
-FROM php:7.3-fpm-alpine
+FROM php:7.0-fpm-alpine
 
 # using aliyun alpine mirror
-RUN echo "http://mirrors.aliyun.com/alpine/v3.9/main"      >  /etc/apk/repositories \
- && echo "http://mirrors.aliyun.com/alpine/v3.9/community" >> /etc/apk/repositories \
-# nginx
- && apk add --no-cache \
+RUN echo "http://mirrors.aliyun.com/alpine/v3.8/main"      >  /etc/apk/repositories \
+ && echo "http://mirrors.aliyun.com/alpine/v3.8/community" >> /etc/apk/repositories
+RUN apk add --no-cache \
     nginx \
     supervisor \
-    libpng-devel \
+    libpng \
+    libpng-dev \
+    freetype \
+    libjpeg-turbo \
+    freetype-dev \
+    libjpeg-turbo-dev \
 # php-exts
- && /usr/local/bin/docker-php-ext-install -j5 gd mbstring mysqli pdo pdo_mysql shmop \
+ && /usr/local/bin/docker-php-ext-install -j "$(nproc)" mbstring mysqli pdo pdo_mysql shmop \
+ && docker-php-ext-configure gd \
+        --enable-gd-native-ttf \
+        --with-freetype-dir=/usr/include/freetype2 \
+        --with-png-dir=/usr/include \
+        --with-jpeg-dir=/usr/include \
+ && /usr/local/bin/docker-php-ext-install -j "$(nproc)" gd \
+ && /usr/local/bin/docker-php-ext-enable opcache gd \
  && apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
     tzdata \

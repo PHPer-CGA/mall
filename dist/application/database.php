@@ -13,13 +13,13 @@ return [
     // 数据库类型
     'type'           => 'mysql',
     // 服务器地址
-    'hostname'       => 'rm-m5e537ugsbm329jewlo.mysql.rds.aliyuncs.com',
+    'hostname'       => 'host.docker.internal',
     // 数据库名
-    'database'       => 'tpshop2',
+    'database'       => 'tpshop',
     // 用户名
-    'username'       => 'tpshop',
+    'username'       => 'root',
     // 密码
-    'password'       => 'dLag18dHOpal9KAL',
+    'password'       => 'cga@009',
     // 端口
     'hostport'       => '3306',
     // 连接dsn

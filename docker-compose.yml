@@ -1,13 +1,18 @@
 version: "3"
 services:
-  invoice_backend:
-    image: tpshop:1.0
+  mall:
+    image: tpshop:latest
     ports:
       # for test
       - "9902:80"
     networks:
       - net
     restart: always
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes: 
       - ./dist:/var/www/html
 networks:
